@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+
 import pack.game.RenderUtils;
 
 /**
@@ -20,10 +21,12 @@ public class EntityCrachePatate extends Entity
     private float eyeYOffset;
     private Vector2 mouseLocation;
 
+    //TODO: Position Y des yeux
     public EntityCrachePatate()
     {
         this.setX(600);
-        this.setScale(0.5f);
+        this.setY(400);
+        this.setScale(1.5f);
 
     }
 
@@ -37,18 +40,16 @@ public class EntityCrachePatate extends Entity
         eyeY = getY() + RenderUtils.POTATOTEXTURE.getHeight()*0.57f*getScale();
         leftEyeX = getX() - RenderUtils.EYEDOTTEXTURE.getWidth()/2*getScale() - RenderUtils.POTATOTEXTURE.getWidth()*0.19f*getScale();
         rightEyeX = getX() - RenderUtils.EYEDOTTEXTURE.getWidth()/2*getScale() + RenderUtils.POTATOTEXTURE.getWidth()*0.255f*getScale();
+        t += RenderUtils.DELTA;
     }
+
+    float t = 0;
 
     public float getRightEyeXOffset()
     {
         float XDifferenceBetweenEyeAndMouse = mouseLocation.x - rightEyeX;
-        float goalOffset = XDifferenceBetweenEyeAndMouse/(float)Math.sqrt(XDifferenceBetweenEyeAndMouse*15*Math.signum(XDifferenceBetweenEyeAndMouse));
+        float goalOffset = (float)(Math.atan(XDifferenceBetweenEyeAndMouse/100)*6)*getScale();
         rightEyeXOffset = MathUtils.lerp(rightEyeXOffset, goalOffset, 0.2f);
-
-        if(rightEyeXOffset > 7)
-            rightEyeXOffset = 7;
-        if(rightEyeXOffset < -7)
-            rightEyeXOffset = -7;
 
         return rightEyeXOffset;
     }
@@ -56,13 +57,8 @@ public class EntityCrachePatate extends Entity
     public float getLeftEyeXOffset()
     {
         float XDifferenceBetweenEyeAndMouse = mouseLocation.x - leftEyeX;
-        float goalOffset = XDifferenceBetweenEyeAndMouse/(float)Math.sqrt(XDifferenceBetweenEyeAndMouse*15*Math.signum(XDifferenceBetweenEyeAndMouse));
+        float goalOffset = (float)(Math.atan(XDifferenceBetweenEyeAndMouse/100)*6f)*getScale();
         leftEyeXOffset = MathUtils.lerp(leftEyeXOffset, goalOffset, 0.2f);
-
-        if(leftEyeXOffset > 7)
-            leftEyeXOffset = 7;
-        if(leftEyeXOffset < -7)
-            leftEyeXOffset = -7;
 
         return leftEyeXOffset;
     }
@@ -70,13 +66,8 @@ public class EntityCrachePatate extends Entity
     public float getEyesYOffset()
     {
         float XDifferenceBetweenEyeAndMouse = mouseLocation.y - eyeY;
-        float goalOffset = XDifferenceBetweenEyeAndMouse/(float)Math.sqrt(XDifferenceBetweenEyeAndMouse*15*Math.signum(XDifferenceBetweenEyeAndMouse));
+        float goalOffset = (float)(Math.atan(XDifferenceBetweenEyeAndMouse/100)*2.3f)*getScale();
         eyeYOffset = MathUtils.lerp(eyeYOffset, goalOffset, 0.2f);
-
-        if(eyeYOffset > 2.5f)
-            eyeYOffset = 2.5f;
-        if(eyeYOffset < -2.5f)
-            eyeYOffset = -2.5f;
 
         return eyeYOffset;
     }
